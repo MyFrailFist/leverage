@@ -19,45 +19,58 @@ class Home extends Component{
 
 			assignments: [
 				{	
-					title: "Guitar Classes", 
-					description: "Learn guitar, I am total begineer",
-					image: null
+					title: "Guitar", 
+					description: "Learn at your own pace",
+					image: 'https://tse4-mm.cn.bing.net/th?id=OIP.FfLPv_ctac3WhjuDZoEepAHaE6&w=264&h=160&c=7&o=5&dpr=2&pid=1.7',
+					descriptionImages: [
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/alex2.jpeg",
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/alex3.jpeg",
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/alex4.png"
+					],
+					level: "average",
+					amount: "20",
+					furtherDescription: "I have been playing the guitar since I was a small child. Some of my favourite songs are...",
+					teacherName: "Alex Oon"
 				},
 				{	
-					title: "Programming Classes", 
-					description: "Learn Programming, I am total begineer",
-					image: null
+					title: "Programming", 
+					description: "I am a novice",
+					image: 'https://tse4-mm.cn.bing.net/th?id=OIP.WfzLlQsJ_2aHleH1wZpmfgHaEE&w=300&h=164&c=7&o=5&dpr=2&pid=1.7',
+					descriptionImages: [
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/chris1.png",
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/chris3.png"
+					],
+					level: "average",
+					amount: "40",
+					furtherDescription: "I have been programming since...",
+					teacherName: "Chris Ling"
 				},
 				{	
-					title: "Ukelele Classes", 
-					description: "Learn Ukelele, I am total begineer",
-					image: null
+					title: "Coaching", 
+					description: "I am total expert",
+					image: 'https://tse2-mm.cn.bing.net/th?id=OIP.Gtfc-g5o7oK9QNn_tkdx3AHaD1&w=299&h=155&c=7&o=5&dpr=2&pid=1.7',
+					descriptionImages: [
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/pervertrong.png",
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/rong.png"
+					],
+					level: "average",
+					amount: "10",
+					furtherDescription: "I have been coaching since...",
+					teacherName: "Yao Rong Cho"
 				},
 				{	
-					title: "Guitar Classes", 
-					description: "Learn guitar, I am total begineer",
-					image: null
+					title: "Yoga", 
+					description: "I am total average",
+					image: "https://tse1-mm.cn.bing.net/th?id=OIP.jG9ItM3839CNjJrfBl0rrgHaE7&w=269&h=180&c=7&o=5&dpr=2&pid=1.7",
+					descriptionImages: [
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/marianne1.png",
+						"http://s3.jp-tok.cloud-object-storage.appdomain.cloud/imageangelhack/marianne2.png"
+					],
+					level: "average",
+					amount: "50",
+					furtherDescription: "I have been doing yoga since...",
+					teacherName: "Marianne Chua"
 				},
-				{	
-					title: "Programming Classes", 
-					description: "Learn Programming, I am total begineer",
-					image: null
-				},
-				{	
-					title: "Ukelele Classes", 
-					description: "Learn Ukelele, I am total begineer",
-					image: null
-				},
-				{	
-					title: "Guitar Classes", 
-					description: "Learn guitar, I am total begineer",
-					image: null
-				},
-				{	
-					title: "Programming Classes", 
-					description: "Learn Programming, I am total begineer",
-					image: null
-				}
 			]
 
 		}
@@ -75,13 +88,24 @@ class Home extends Component{
 	// 			          <span className="nav-text">nav 4</span>
 	// 			        </Menu.Item>
 
+	goNew=()=>{
+		var path = 'createNew'
+    	this.props.history.push(path)
+	}
+
+	goLessons=()=>{
+		var path = 'home'
+    	this.props.history.push(path)    
+	}
+
+
 	render(){
 
 		let {assignments} = this.state;
 
 		let assignmentsDisplay = assignments.map(function(elem){
 			console.log("the ele is ", elem)
-			return <div className="statusDisplay-box" key={elem.title}><CardDisplay values={elem}/></div>
+			return <div className="statusDisplay-box"  key={elem.title}><CardDisplay values={elem}/></div>
 		})
 
 
@@ -100,13 +124,13 @@ class Home extends Component{
 				    >
 				      <div className="logo" />
 				      <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-				        <Menu.Item key="1">
+				        <Menu.Item key="1" onClick={this.goNew}>
 				          <Icon type="user" />
-				          <span className="nav-text">Home</span>
+				          <span className="nav-text">Create New</span>
 				        </Menu.Item>
-				        <Menu.Item key="2">
+				        <Menu.Item key="2" onClick={this.goLessons}>
 				          <Icon type="video-camera" />
-				          <span className="nav-text">Assignments</span>
+				          <span className="nav-text">Lessons</span>
 				        </Menu.Item>
 				        
 				      </Menu>
@@ -120,7 +144,7 @@ class Home extends Component{
 
 				        </div>
 				      </Content>
-				      <Footer style={{ textAlign: 'center' }}>Leveraged ©2019 Created by Leve</Footer>
+				      <Footer style={{ textAlign: 'center' }}>Leverage ©2019 Created by Leverage</Footer>
 				    </Layout>
 				  </Layout>	
 			</div>

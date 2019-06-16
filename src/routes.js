@@ -8,8 +8,8 @@ import Home from './pages/home/home';
 import Login from './pages/login/login';
 import Assignment from './pages/assignment/assignment';
 import Register from './pages/register/register';
-
-
+import CreateNew from './pages/createNew/createNew';
+import Payment from './pages/payment/payment';
 
 const routes = (
 
@@ -20,6 +20,8 @@ const routes = (
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/assignment" component={Assignment} />
+        <Route path="/createNew" component={CreateNew} />
+        <Route path="/payment" component={Payment} />
 
     </Switch>
 

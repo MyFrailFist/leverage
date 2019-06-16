@@ -1,9 +1,19 @@
 import React, {Component} from 'react'
-import { Card, Icon, Avatar, Modal, Button } from 'antd';
+import { Card, Icon, Avatar, Modal, Button,Carousel, notification } from 'antd';
+
+
+import { Descriptions, Badge } from 'antd';
+
+
+
+import "./cardDisplay.css";
 
 const { Meta } = Card;
 
-
+notification.config({
+	top: "50%",
+	right: "50% !important"
+})
 
 
 
@@ -16,6 +26,9 @@ export default class CardDisplay extends Component{
 			values: props.values,
 			loading: false,
     		visible: false,
+
+    		loading2: false,
+    		visible2: false,
 		}
 
 
@@ -24,11 +37,34 @@ export default class CardDisplay extends Component{
 
 	componentDidMount(){}
 
+	openNotification = () => {
+		let secondsToGo = 5;
+		let _this = this
+		var name = _this.state.values.teacherName
+		const modal = Modal.success({
+		    title: 'Booking Confirmed',
+		    content: `Congratulations, you have successfully booked a guitar lesson with ${name}`,
+		    okText:"Proceed to payment",
+		    onOk: _this.openPayment()
+
+		});
+		const timer = setInterval(() => {
+		    secondsToGo -= 1;
+		}, 1000);
+		setTimeout(() => {
+		    clearInterval(timer);
+		    modal.destroy();
+		}, secondsToGo * 1000);
+	}
+
+
+	openPayment=()=>{
+		var path = 'payment'
+    	// this.props.history.push(path)    
+	}
 
 	openPopup=()=>{
 		console.log("this")
-
-
 
 	}
 
@@ -47,19 +83,50 @@ export default class CardDisplay extends Component{
 	    this.setState({ loading: true });
 	    setTimeout(() => {
 	      this.setState({ loading: false, visible: false });
+	      this.openNotification()
 	    }, 3000);
 	};
+
+	onChange = (a, b, c) => {
+	  console.log(a, b, c);
+	}
+
 
 
 
 	render(){
-		let values = this.state;
+		let {values} = this.state;
 		let title = values.title
 		let description = values.description
-		let image = values.image
+		let image = values.image? values.image:"https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+		let avatar = values.avatar? values.avatar:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+		let descriptionImages = values.descriptionImages
+
+		let level = values.level
+		let amount = values.amount
+		let furtherDescription = values.furtherDescription
+		let teacherName = values.teacherName
+
+		let teacherNameGreet = "Taught by " + teacherName
 
 		const { visible, loading } = this.state;
 
+		let carouselPictures = []
+		let fourPic = ["https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original", "https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original", "https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"]
+
+		if( descriptionImages && descriptionImages.length>0){
+			carouselPictures = descriptionImages.map(function(elem){
+				return <div> <img src= {elem}/> </div>
+			})
+		}
+		
+		else{
+
+			carouselPictures = fourPic.map(function(elem){
+				return <div className="smallImages" style={{height:"200"}}> <img style={{height:"200"}} src={elem}/> </div>
+			})
+			
+		}
 
 		return(
 			<div className="CardDisplay">
@@ -68,38 +135,53 @@ export default class CardDisplay extends Component{
 				    cover={
 				      <img
 				        alt="example"
-				        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+				        src={image}
+				        style={{
+					      height: 200,
+					    }}
 				      />
 				    }
-				    actions={[<Icon type="setting"  onClick={this.showModal}/>, <Icon type="edit" />, <Icon type="ellipsis" />]}
+				    actions={[<Icon type="check-circle"  theme="twoTone" twoToneColor="#52c41a"   onClick={this.showModal}/>, <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96"/>]}
 				  >
 				    <Meta
-				      avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+				      avatar={<Avatar src={avatar} />}
 				      title={title}
 				      description={description}
 				    />
 				</Card>
 
 				 <Modal
+				  className="thisModal"
 		          visible={visible}
-		          title="Title"
+		          title={title}
 		          onOk={this.handleOk}
 		          onCancel={this.handleCancel}
 		          footer={[
 		            <Button key="back" onClick={this.handleCancel}>
-		              Return
+		              Back
 		            </Button>,
 		            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-		              Submit
-		            </Button>,
+		              Confirm
+		            </Button>
 		          ]}
 		        >
-		          <p>Some contents...</p>
-		          <p>Some contents...</p>
-		          <p>Some contents...</p>
-		          <p>Some contents...</p>
-		          <p>Some contents...</p>
+
+
+
+		          <Carousel afterChange={this.onChange}>
+				    {carouselPictures}
+				  </Carousel>
+		          <Descriptions title={teacherNameGreet} bordered>
+				    <Descriptions.Item label="Frequency" span={12}>{level}</Descriptions.Item>
+				    <Descriptions.Item label="Starting Date" span={12}>{level}</Descriptions.Item>
+				    <Descriptions.Item label="Amount" span={12}>${amount}</Descriptions.Item>
+				    <Descriptions.Item label="Description">
+				    	{furtherDescription}
+				    </Descriptions.Item>
+				  </Descriptions>
 		        </Modal>
+
+
 			</div>
 		)
 	}
