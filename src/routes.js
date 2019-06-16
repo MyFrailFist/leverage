@@ -12,13 +12,17 @@ import Register from './pages/register/register';
 
 
 const routes = (
+
     <Switch>
+
         <Route path="/" exact render={() => (<Redirect to="/home"/>)}/>
         <Route path="/home" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/assignment" component={Assignment} />
+
     </Switch>
+
 );
 
 export default routes;

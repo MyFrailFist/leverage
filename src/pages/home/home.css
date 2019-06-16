@@ -1,0 +1,16 @@
+.Home{
+	height: 100%;
+
+}
+.background-home{
+	min-height: 1000px !important;
+}
+
+.ant-layout{
+	height: 100% !important;
+}
+
+.statusDisplay-box{
+	float:left;
+	padding: 3%;
+}
